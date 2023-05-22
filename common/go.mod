@@ -1,4 +1,4 @@
-module git.imooc.com/coding-535/common
+module github.com/yunixiangfeng/gopaas/common
 
 go 1.16
 
