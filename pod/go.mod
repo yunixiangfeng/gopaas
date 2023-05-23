@@ -1,4 +1,4 @@
-module github.com/gopaas/pod
+module github.com/yunixiangfeng/gopaas/pod
 
 go 1.18
 
