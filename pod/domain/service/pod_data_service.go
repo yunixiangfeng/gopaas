@@ -5,10 +5,10 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/gopaas/pod/domain/model"
-	"github.com/gopaas/pod/domain/repository"
-	"github.com/gopaas/pod/proto/pod"
 	"github.com/yunixiangfeng/common"
+	"github.com/yunixiangfeng/gopaas/pod/domain/model"
+	"github.com/yunixiangfeng/gopaas/pod/domain/repository"
+	"github.com/yunixiangfeng/gopaas/pod/proto/pod"
 	v1 "k8s.io/api/apps/v1"
 	v13 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
@@ -104,7 +104,7 @@ func (u *PodDataService) SetDeployment(podInfo *pod.PodInfo) {
 		Namespace: podInfo.PodNamespace,
 		Labels: map[string]string{
 			"app-name": podInfo.PodName,
-			"author":   "Caplost",
+			"author":   "wu123",
 		},
 	}
 	deployment.Name = podInfo.PodName
