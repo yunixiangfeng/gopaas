@@ -119,7 +119,7 @@ func main() {
 	//
 	//创建k8s连接
 	//在集群外部使用
-	//-v /Users/cap/.kube/config:/root/.kube/config
+	//-v /home/wu123/.kube/config:/root/.kube/config
 	var kubeconfig *string
 	if home := homedir.HomeDir(); home != "" {
 		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "kubeconfig file 在当前系统中的地址")
