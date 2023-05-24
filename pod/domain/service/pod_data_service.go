@@ -1,4 +1,4 @@
-package serivce
+package service
 
 import (
 	"context"
@@ -104,7 +104,7 @@ func (u *PodDataService) SetDeployment(podInfo *pod.PodInfo) {
 		Namespace: podInfo.PodNamespace,
 		Labels: map[string]string{
 			"app-name": podInfo.PodName,
-			"author":   "wu123",
+			"author":   "Caplost",
 		},
 	}
 	deployment.Name = podInfo.PodName

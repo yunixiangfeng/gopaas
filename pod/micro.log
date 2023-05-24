@@ -1,3 +1,40 @@
 {"level":"error","ts":"2023-05-23T12:14:12.279+0800","caller":"pod/main.go:64","msg":"error loading source consul: Get \"http://192.168.204.130:8500/v1/kv/micro/config?recurse=\": dial tcp 192.168.204.130:8500: connectex: No connection could be made because the target machine actively refused it."}
 {"level":"error","ts":"2023-05-23T12:14:14.301+0800","caller":"pod/main.go:73","msg":"dial tcp :3306: connectex: No connection could be made because the target machine actively refused it."}
 {"level":"error","ts":"2023-05-23T12:18:36.957+0800","caller":"pod/main.go:73","msg":"dial tcp [::1]:3306: connectex: No connection could be made because the target machine actively refused it."}
+{"level":"fatal","ts":"2023-05-23T16:26:54.178+0800","caller":"pod/main.go:175","msg":"Error 1050: Table 'pod' already exists"}
+{"level":"info","ts":"2023-05-23T17:53:22.989+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:53:22.992+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:53:22.992+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:53:34.696+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:53:34.697+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:53:34.697+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:54:18.692+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:54:18.692+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:54:18.692+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:56:20.131+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:56:20.131+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:56:20.131+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:56:20.874+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:56:20.874+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:56:20.874+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:56:21.051+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:56:21.052+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:56:21.052+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:56:21.226+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:56:21.226+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:56:21.226+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:56:21.451+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:56:21.451+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:56:21.452+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:56:21.643+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:56:21.643+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:56:21.643+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T17:59:33.648+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T17:59:33.649+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T17:59:33.649+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}
+{"level":"info","ts":"2023-05-23T19:58:13.025+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T19:58:16.547+0800","caller":"service/pod_data_service.go:49","msg":"Post \"https://192.168.204.129:6443/apis/apps/v1/namespaces/default/deployments\": dial tcp 192.168.204.129:6443: connect: no route to host"}
+{"level":"error","ts":"2023-05-23T19:58:16.547+0800","caller":"handler/podHandler.go:30","msg":"Post \"https://192.168.204.129:6443/apis/apps/v1/namespaces/default/deployments\": dial tcp 192.168.204.129:6443: connect: no route to host"}
+{"level":"info","ts":"2023-05-23T20:52:22.568+0800","caller":"handler/podHandler.go:20","msg":"添加pod"}
+{"level":"error","ts":"2023-05-23T20:52:22.568+0800","caller":"service/pod_data_service.go:49","msg":"an empty namespace may not be set during creation"}
+{"level":"error","ts":"2023-05-23T20:52:22.568+0800","caller":"handler/podHandler.go:30","msg":"an empty namespace may not be set during creation"}

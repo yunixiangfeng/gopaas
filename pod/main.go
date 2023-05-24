@@ -119,7 +119,7 @@ func main() {
 	//
 	//创建k8s连接
 	//在集群外部使用
-	//-v /home/wu123/.kube/config:/root/.kube/config
+	//-v /Users/cap/.kube/config:/root/.kube/config
 	var kubeconfig *string
 	if home := homedir.HomeDir(); home != "" {
 		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "kubeconfig file 在当前系统中的地址")
@@ -170,10 +170,10 @@ func main() {
 	service.Init()
 
 	//只能初始化一次，初始化数据表
-	err = repository.NewPodRepository(db).InitTable()
-	if err != nil {
-		common.Fatal(err)
-	}
+	//err = repository.NewPodRepository(db).InitTable()
+	//if err != nil {
+	//	common.Fatal(err)
+	//}
 
 	//注册句柄
 	podDataService := service2.NewPodDataService(repository.NewPodRepository(db), clientset)
@@ -183,4 +183,5 @@ func main() {
 	if err := service.Run(); err != nil {
 		common.Fatal(err)
 	}
+
 }

@@ -6,13 +6,13 @@ import (
 
 	"github.com/yunixiangfeng/gopaas/common"
 	"github.com/yunixiangfeng/gopaas/pod/domain/model"
-	serivce "github.com/yunixiangfeng/gopaas/pod/domain/service"
+	"github.com/yunixiangfeng/gopaas/pod/domain/service"
 	"github.com/yunixiangfeng/gopaas/pod/proto/pod"
 )
 
 type PodHandler struct {
 	//注意这里的类型实 IPodDataService 接口类型
-	PodDataService serivce.IPodDataService
+	PodDataService service.IPodDataService
 }
 
 //添加创建POD

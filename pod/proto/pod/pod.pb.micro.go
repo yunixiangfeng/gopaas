@@ -5,12 +5,13 @@ package pod
 
 import (
 	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
+	proto "google.golang.org/protobuf/proto"
 	math "math"
 )
 
 import (
 	context "context"
+	api "github.com/asim/go-micro/v3/api"
 	client "github.com/asim/go-micro/v3/client"
 	server "github.com/asim/go-micro/v3/server"
 )
@@ -20,16 +21,17 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
-
 // Reference imports to suppress errors if they are not otherwise used.
+var _ api.Endpoint
 var _ context.Context
 var _ client.Option
 var _ server.Option
+
+// Api Endpoints for Pod service
+
+func NewPodEndpoints() []*api.Endpoint {
+	return []*api.Endpoint{}
+}
 
 // Client API for Pod service
 
@@ -47,12 +49,6 @@ type podService struct {
 }
 
 func NewPodService(name string, c client.Client) PodService {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(name) == 0 {
-		name = "pod"
-	}
 	return &podService{
 		c:    c,
 		name: name,
