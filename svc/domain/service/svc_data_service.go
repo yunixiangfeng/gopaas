@@ -1,8 +1,17 @@
 package service
 
 import (
+	"context"
+	"errors"
+	"strconv"
+
+	"github.com/yunixiangfeng/gopaas/common"
 	"github.com/yunixiangfeng/gopaas/svc/domain/model"
 	"github.com/yunixiangfeng/gopaas/svc/domain/repository"
+	"github.com/yunixiangfeng/gopaas/svc/proto/svc"
+	v1 "k8s.io/api/core/v1"
+	v12 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -13,6 +22,9 @@ type ISvcDataService interface {
 	UpdateSvc(*model.Svc) error
 	FindSvcByID(int64) (*model.Svc, error)
 	FindAllSvc() ([]model.Svc, error)
+	CreateSvcToK8s(*svc.SvcInfo) error
+	UpdateSvcToK8s(*svc.SvcInfo) error
+	DeleteFromK8s(*model.Svc) error
 }
 
 //创建
@@ -25,6 +37,98 @@ type SvcDataService struct {
 	//注意：这里是 ISvcRepository 类型
 	SvcRepository repository.ISvcRepository
 	K8sClientSet  *kubernetes.Clientset
+}
+
+//创建服务到K8s中
+func (u *SvcDataService) CreateSvcToK8s(svcInfo *svc.SvcInfo) (err error) {
+	service := u.setService(svcInfo)
+	//查找是否纯在指定的服务
+	if _, err = u.K8sClientSet.CoreV1().Services(svcInfo.SvcNamespace).Get(context.TODO(), svcInfo.SvcName, v12.GetOptions{}); err != nil {
+		//查找不到,就创建
+		if _, err = u.K8sClientSet.CoreV1().Services(svcInfo.SvcNamespace).Create(context.TODO(), service, v12.CreateOptions{}); err != nil {
+			common.Error(err)
+			return err
+		}
+		return nil
+	} else {
+		common.Error("Service " + svcInfo.SvcName + "已经存在")
+		return errors.New("Service " + svcInfo.SvcName + "已经存在")
+	}
+
+}
+
+//根据svcnfo 设置Iservice 信息
+func (u *SvcDataService) setService(svcInfo *svc.SvcInfo) *v1.Service {
+	service := &v1.Service{}
+	//设置服务类型
+	service.TypeMeta = v12.TypeMeta{
+		Kind:       "v1",
+		APIVersion: "Service",
+	}
+	//设置服务基础信息
+	service.ObjectMeta = v12.ObjectMeta{
+		Name:      svcInfo.SvcName,
+		Namespace: svcInfo.SvcNamespace,
+		Labels: map[string]string{
+			"app-name": svcInfo.SvcPodName,
+			"author":   "wu123",
+		},
+		Annotations: map[string]string{
+			"k8s/generated-by-wu": "由代码创建",
+		},
+	}
+	//设置服务的spec信息，课程中采用ClusterIP模式
+	service.Spec = v1.ServiceSpec{
+		Ports: u.getSvcPort(svcInfo),
+		Selector: map[string]string{
+			"app-name": svcInfo.SvcPodName,
+		},
+		Type: "ClusterIP",
+	}
+	return service
+}
+
+func (u *SvcDataService) getSvcPort(svcInfo *svc.SvcInfo) (servicePort []v1.ServicePort) {
+	for _, v := range svcInfo.SvcPort {
+		servicePort = append(servicePort, v1.ServicePort{
+			Name:       "port-" + strconv.FormatInt(int64(v.SvcPort), 10),
+			Protocol:   v1.Protocol(v.SvcPortProtocol),
+			Port:       v.SvcPort,
+			TargetPort: intstr.FromInt(int(v.SvcTargetPort)),
+		})
+	}
+	return
+}
+
+func (u *SvcDataService) UpdateSvcToK8s(svcInfo *svc.SvcInfo) (err error) {
+	service := u.setService(svcInfo)
+	//查找是否纯在指定的服务
+	if _, err = u.K8sClientSet.CoreV1().Services(svcInfo.SvcNamespace).Get(context.TODO(), svcInfo.SvcName, v12.GetOptions{}); err != nil {
+		//查找不到
+		common.Error(err)
+		return errors.New("Service" + svcInfo.SvcName + "不存在请先创建")
+	} else {
+		if _, err = u.K8sClientSet.CoreV1().Services(svcInfo.SvcNamespace).Update(context.TODO(), service, v12.UpdateOptions{}); err != nil {
+			common.Error(err)
+			return err
+		}
+		common.Info("Service " + svcInfo.SvcName + "更新成功")
+		return nil
+	}
+}
+
+func (u *SvcDataService) DeleteFromK8s(svc *model.Svc) (err error) {
+	if err = u.K8sClientSet.CoreV1().Services(svc.SvcNamespace).Delete(context.TODO(), svc.SvcName, v12.DeleteOptions{}); err != nil {
+		common.Error(err)
+		return err
+	} else {
+		if err := u.DeleteSvc(svc.ID); err != nil {
+			common.Error(err)
+			return err
+		}
+		common.Info("删除Service ID：" + strconv.FormatInt(svc.ID, 10) + "成功！")
+	}
+	return
 }
 
 //插入
