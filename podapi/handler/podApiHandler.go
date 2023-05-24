@@ -23,6 +23,7 @@ func (e *PodApi) FindPodById(ctx context.Context, req *podApi.Request, rsp *podA
 	fmt.Println("接受到 podApi.FindPodById 的请求")
 	if _, ok := req.Get["pod_id"]; !ok {
 		rsp.StatusCode = 500
+		return errors.New("参数异常")
 	}
 	//获取podid 参数
 	podIdString := req.Get["pod_id"].Values[0]
@@ -34,6 +35,9 @@ func (e *PodApi) FindPodById(ctx context.Context, req *podApi.Request, rsp *podA
 	podInfo, err := e.PodService.FindPodByID(ctx, &pod.PodId{
 		Id: podId,
 	})
+	if err != nil {
+		return err
+	}
 	//json 返回pod信息
 	rsp.StatusCode = 200
 	b, _ := json.Marshal(podInfo)

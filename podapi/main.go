@@ -14,7 +14,6 @@ import (
 	"github.com/asim/go-micro/v3"
 	"github.com/asim/go-micro/v3/registry"
 	"github.com/asim/go-micro/v3/server"
-	"github.com/jinzhu/gorm"
 	"github.com/opentracing/opentracing-go"
 	"github.com/yunixiangfeng/gopaas/common"
 	go_micro_service_pod "github.com/yunixiangfeng/gopaas/pod/proto/pod"
@@ -45,7 +44,6 @@ var (
 )
 
 func main() {
-
 	//1.注册中心
 	consul := consul.NewRegistry(func(options *registry.Options) {
 		options.Addrs = []string{
@@ -53,37 +51,27 @@ func main() {
 		}
 	})
 
-	//2.配置中心，存放经常变动的配置
-	consulConfig, err := common.GetConsulConfig(consulHost, consulPort, "/micro/config")
-	if err != nil {
-		common.Error(err)
-	}
-
-	//3.使用配置中心连接 Mysql
-	mysqlInfo := common.GetMysqlFromConsul(consulConfig, "mysql")
-	//初始化数据库
-	db, err := gorm.Open("mysql", mysqlInfo.User+":"+mysqlInfo.Pwd+"@("+mysqlInfo.Host+":3306)/"+mysqlInfo.Database+"?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		fmt.Println(err)
-		common.Error(err)
-	}
-	defer db.Close()
-	db.SingularTable(true)
-	//4.添加链路追踪
-	t, io, err := common.NewTracer("go.micro.service.pod", tracerHost+":"+strconv.Itoa(tracerPort))
+	//2.添加链路追踪
+	t, io, err := common.NewTracer("go.micro.api.podApi", tracerHost+":"+strconv.Itoa(tracerPort))
 	if err != nil {
 		common.Error(err)
 	}
 	defer io.Close()
 	opentracing.SetGlobalTracer(t)
 
-	//5.添加熔断器
+	//3.添加熔断器
 	hystrixStreamHandler := hystrix.NewStreamHandler()
 	hystrixStreamHandler.Start()
 
-	//添加监听程序
+	//4.添加日志
+	//1）需要程序日志打入到日志文件中
+	//2）在程序中添加filebeat.yml 文件
+	//3) 启动filebeat，启动命令 ./filebeat -e -c filebeat.yml
+	fmt.Println("日志统一记录在根目录 micro.log 文件中，请点击查看日志！")
+
+	//6.启动熔断监听程序
 	go func() {
-		//http://192.168.204.130:9092/turbine/turbine.stream
+		//http://192.168.0.108:9092/turbine/turbine.stream
 		//看板访问地址 http://127.0.0.1:9002/hystrix，url后面一定要带 /hystrix
 		err = http.ListenAndServe(net.JoinHostPort("0.0.0.0", strconv.Itoa(hystrixPort)), hystrixStreamHandler)
 		if err != nil {
@@ -91,18 +79,12 @@ func main() {
 		}
 	}()
 
-	//6.添加日志中心
-	//1）需要程序日志打入到日志文件中
-	//2）在程序中添加filebeat.yml 文件
-	//3) 启动filebeat，启动命令 ./filebeat -e -c filebeat.yml
-	fmt.Println("日志统一记录在根目录 micro.log 文件中，请点击查看日志！")
-
-	//7.添加监控
+	//7.添加监控采集地址
 	common.PrometheusBoot(prometheusPort)
 
-	//创建服务实例
+	//8.创建服务
 	service := micro.NewService(
-		//自定义服务地址，且必须写在其它参数前面
+		//自定义服务地址，必须要写在其它参数前面
 		micro.Server(server.NewServer(func(options *server.Options) {
 			options.Advertise = serviceHost + ":" + servicePort
 		})),
@@ -110,12 +92,12 @@ func main() {
 		micro.Version("latest"),
 		//指定服务端口
 		micro.Address(":"+servicePort),
-		//添加注册中心
+		//添加注册中心，
 		micro.Registry(consul),
-		//添加链路追逐
+		//添加链路追踪
 		micro.WrapHandler(opentracing2.NewHandlerWrapper(opentracing.GlobalTracer())),
 		micro.WrapClient(opentracing2.NewClientWrapper(opentracing.GlobalTracer())),
-		//作为客户端使用，添加熔断
+		//作为客户端范围启动熔断
 		micro.WrapClient(hystrix2.NewClientHystrixWrapper()),
 		//添加限流
 		micro.WrapHandler(ratelimit.NewHandlerWrapper(1000)),
@@ -123,17 +105,14 @@ func main() {
 		micro.WrapClient(roundrobin.NewClientWrapper()),
 	)
 
-	//初始化服务
 	service.Init()
 
-	//注册句柄
 	podService := go_micro_service_pod.NewPodService("go.micro.service.pod", service.Client())
 	//注册控制器
 	if err := podApi.RegisterPodApiHandler(service.Server(), &handler.PodApi{PodService: podService}); err != nil {
 		common.Error(err)
 	}
-
-	//启动服务
+	// 启动服务
 	if err := service.Run(); err != nil {
 		common.Fatal(err)
 	}
