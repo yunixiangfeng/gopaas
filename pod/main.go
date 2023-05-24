@@ -17,7 +17,7 @@ import (
 	"github.com/asim/go-micro/v3/server"
 	"github.com/jinzhu/gorm"
 	"github.com/opentracing/opentracing-go"
-	"github.com/yunixiangfeng/common"
+	"github.com/yunixiangfeng/gopaas/common"
 	"github.com/yunixiangfeng/gopaas/pod/domain/repository"
 	service2 "github.com/yunixiangfeng/gopaas/pod/domain/service"
 	"github.com/yunixiangfeng/gopaas/pod/handler"

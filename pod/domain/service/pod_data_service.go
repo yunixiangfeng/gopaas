@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/yunixiangfeng/common"
+	"github.com/yunixiangfeng/gopaas/common"
 	"github.com/yunixiangfeng/gopaas/pod/domain/model"
 	"github.com/yunixiangfeng/gopaas/pod/domain/repository"
 	"github.com/yunixiangfeng/gopaas/pod/proto/pod"
