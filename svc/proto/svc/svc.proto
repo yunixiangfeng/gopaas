@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package svc;
+
+option go_package = "./proto/svc;svc";
+
+service Svc {
+	//对外提供添加服务
+	rpc AddSvc(SvcInfo) returns (Response) {}
+	rpc DeleteSvc(SvcId) returns (Response) {}
+	rpc UpdateSvc(SvcInfo) returns (Response) {}
+	rpc FindSvcByID(SvcId) returns (SvcInfo) {}
+	rpc FindAllSvc(FindAll) returns (AllSvc) {}
+}
+message SvcInfo {
+	int64 id = 1;
+}
+
+message SvcId {
+	int64 id = 1;
+}
+
+message FindAll {
+
+}
+
+message Response {
+	string msg =1 ;
+}
+
+message AllSvc {
+	repeated SvcInfo svc_info = 1;
+}
+
+
