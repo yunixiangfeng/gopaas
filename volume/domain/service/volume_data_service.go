@@ -9,7 +9,7 @@ import (
 	"github.com/yunixiangfeng/gopaas/volume/domain/model"
 	"github.com/yunixiangfeng/gopaas/volume/domain/repository"
 	"github.com/yunixiangfeng/gopaas/volume/proto/volume"
-	"k8s.io/api/apps/v1"
+	v1 "k8s.io/api/apps/v1"
 	v12 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	v13 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -90,7 +90,6 @@ func (u *VolumeDataService) setVolume(info *volume.VolumeInfo) *v12.PersistentVo
 		Annotations: map[string]string{
 			"pv.kubernetes.io/bound-by-controller":          "yes",
 			"volume.beta.kubernetes.io/storage-provisioner": "rbd.csi.ceph.com",
-			"wu": "wu123",
 		},
 	}
 	//设置存储动态信息

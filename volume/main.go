@@ -169,10 +169,10 @@ func main() {
 	service.Init()
 
 	//只能执行一遍
-	//err = repository.NewVolumeRepository(db).InitTable()
-	//if err != nil {
-	//	common.Fatal(err)
-	//}
+	err = repository.NewVolumeRepository(db).InitTable()
+	if err != nil {
+		common.Fatal(err)
+	}
 
 	// 注册句柄，可以快速操作已开发的服务
 	volumeDataService := service2.NewVolumeDataService(repository.NewVolumeRepository(db), clientset)
