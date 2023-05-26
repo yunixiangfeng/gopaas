@@ -1,10 +1,9 @@
-
-
 package hystrix
 
 import (
 	"context"
 	"fmt"
+
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/asim/go-micro/v3/client"
 )
@@ -21,7 +20,7 @@ func (c *clientWrapper) Call(ctx context.Context, req client.Request, rsp interf
 		return c.Client.Call(ctx, req, rsp, opts...)
 	}, func(e error) error {
 		//走熔断逻辑,每个服务都不一样
-		fmt.Println(req.Service() + "." + req.Endpoint()+"的熔断逻辑")
+		fmt.Println(req.Service() + "." + req.Endpoint() + "的熔断逻辑")
 		return e
 	})
 }

@@ -27,5 +27,5 @@ kubectl get pods -n monitoring
 
 #### 4.添加路由外网访问
 通过前一章开发的 route 功能添加 monitoring 命名空间下
-grafana.wu.com 域名
+grafana.wu123.com 域名
 第一次登录默认账号：admin 密码：admin

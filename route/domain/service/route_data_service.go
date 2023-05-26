@@ -71,10 +71,10 @@ func (u *RouteDataService) setIngress(info *route.RouteInfo) *v12.Ingress {
 		Namespace: info.RouteNamespace,
 		Labels: map[string]string{
 			"app-name": info.RouteName,
-			"author":   "wu123",
+			"author":   "Caplost",
 		},
 		Annotations: map[string]string{
-			"k8s/generated-by-wu": "由代码创建",
+			"k8s/generated-by-cap": "由Cap老师代码创建",
 		},
 	}
 	//使用 ingress-nginx
