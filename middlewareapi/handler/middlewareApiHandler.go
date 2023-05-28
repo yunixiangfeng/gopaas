@@ -8,9 +8,9 @@ import (
 
 	log "github.com/asim/go-micro/v3/logger"
 	"github.com/yunixiangfeng/gopaas/common"
-	middleware "github.com/yunixiangfeng/gopaas/middleware/proto/middleware"
+	"github.com/yunixiangfeng/gopaas/middleware/proto/middleware"
+	"github.com/yunixiangfeng/gopaas/middlewareApi/plugin/form"
 	middlewareApi "github.com/yunixiangfeng/gopaas/middlewareApi/proto/middlewareApi"
-	"ithub.com/yunixiangfeng/gopaas/middlewareApi/plugin/form"
 )
 
 type MiddlewareApi struct {

@@ -18,7 +18,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/asim/go-micro/plugins/wrapper/select/roundrobin/v3"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/opentracing/opentracing-go"
 	"github.com/yunixiangfeng/gopaas/middlewareApi/handler"
