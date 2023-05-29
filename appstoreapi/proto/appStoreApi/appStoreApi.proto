@@ -11,6 +11,12 @@ service AppStoreApi {
 	rpc UpdateAppStore(Request) returns (Response){}
 	//默认接口
 	rpc Call(Request) returns (Response){}
+
+	//添加常用的统计接口
+	rpc AddInstallNum(Request) returns (Response){}
+	rpc GetInstallNum(Request) returns (Response){}
+	rpc AddViewNum(Request) returns (Response){}
+	rpc GetViewNum(Request) returns (Response){}
 }
 
 message Pair {
