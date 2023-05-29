@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/yunixiangfeng/gopaas/appStoreApi/proto/appStoreApi"
 	"github.com/yunixiangfeng/gopaas/common"
 )
 

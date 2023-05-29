@@ -11,7 +11,7 @@ import (
 	"github.com/asim/go-micro/v3"
 	"github.com/asim/go-micro/v3/registry"
 	"github.com/asim/go-micro/v3/server"
-	go_micro_service_appStore "github.com/yunixiangfeng/gopaas/appStore/proto/appStore"
+
 	"github.com/yunixiangfeng/gopaas/common"
 
 	"net"
@@ -20,9 +20,9 @@ import (
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/opentracing/opentracing-go"
+	go_micro_service_appStore "github.com/yunixiangfeng/gopaas/appStore/proto/appStore"
 	"github.com/yunixiangfeng/gopaas/appStoreApi/handler"
 	hystrix2 "github.com/yunixiangfeng/gopaas/appStoreApi/plugin/hystrix"
-
 	appStoreApi "github.com/yunixiangfeng/gopaas/appStoreApi/proto/appStoreApi"
 )
 
