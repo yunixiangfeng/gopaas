@@ -11,6 +11,16 @@ service UserApi {
 	rpc UpdateUser(Request) returns (Response){}
 	//默认接口
 	rpc Call(Request) returns (Response){}
+
+	rpc AddRole(Request) returns (Response){}
+	rpc UpdateRole(Request) returns (Response){}
+	rpc DeleteRole(Request) returns (Response){}
+
+	rpc IsRight(Request) returns (Response){}
+
+	rpc AddPermission(Request) returns (Response){}
+	rpc UpdatePermission(Request) returns (Response){}
+	rpc DeletePermission(Request) returns (Response){}
 }
 
 message Pair {
