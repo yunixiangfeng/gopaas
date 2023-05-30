@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package permission;
+
+option go_package = "./proto/permission;permission";
+
+service Permission {
+	//对外提供添加服务
+	rpc AddPermission(PermissionInfo) returns (Response) {}
+	rpc DeletePermission(PermissionId) returns (Response) {}
+	rpc UpdatePermission(PermissionInfo) returns (Response) {}
+	rpc FindPermissionByID(PermissionId) returns (PermissionInfo) {}
+	rpc FindAllPermission(FindAll) returns (AllPermission) {}
+
+}
+
+
+message PermissionInfo {
+	int64 id = 1;
+	string permission_name =2;
+	string permission_describe =3;
+	string permission_action = 4;
+	int32 permission_status = 5;
+}
+
+message PermissionId {
+	int64 id = 1;
+}
+
+message FindAll {
+
+}
+
+message Response {
+	string msg =1 ;
+}
+
+message AllPermission {
+	repeated PermissionInfo permission_info = 1;
+}
+
+
